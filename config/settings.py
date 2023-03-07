@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
+from environs import Env # new
+env = Env() # new
+env.read_env() # new
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '0g3tf751rleb90jg5j-z0t7stdog$1vw3m4)xu*djko8lt#d8m'
-
+# SECRET_KEY = env("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -64,6 +67,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 ACCOUNT_SESSION_REMEMBER = True
+
+DEBUG = False # new
+
+# DEBUG = env.bool("DJANGO_DEBUG")
+
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1'] # new
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
