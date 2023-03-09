@@ -5,4 +5,7 @@ from .models import Book, Book
 
 class BookListView(ListView):
   model = Book
+  context_object_name = 'book_list'
   template_name = 'book/list.html'
+  
+  
