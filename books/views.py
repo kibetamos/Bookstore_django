@@ -6,6 +6,11 @@ from .models import Book, Book
 class BookListView(ListView):
   model = Book
   context_object_name = 'book_list'
-  template_name = 'book/list.html'
+  template_name = 'books/book_list.html'
   
   
+  
+  
+class BookDetailView(DetailView): # new
+  model = Book
+  template_name = 'books/book_detail.html'
