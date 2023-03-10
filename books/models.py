@@ -12,3 +12,5 @@ class Book(models.Model):
   
 #   Below we’ve specified a __str__ method to control how the object is outputted in the Admin and
 # Django shell.
+  def get_absolute_url(self): # new
+    return reverse('book_detail', args=[str(self.id)])
