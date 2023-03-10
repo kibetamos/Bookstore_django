@@ -34,23 +34,22 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',#this is used by the authentication in django
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",  # new
     # Third-party
-    'crispy_forms',
-    'allauth', # new
-    'allauth.account', # new
-
-    #local
-    'accounts',
-    'pages',
-    'books',
+    "crispy_forms",  # new
+    "crispy_bootstrap5",  # new
+    "allauth",  # new
+    "allauth.account",  # new
+    # Local
+    "accounts.apps.AccountsConfig",  # new
+    "pages.apps.PagesConfig",  # new
+    "books.apps.BooksConfig",  # new
 ]
 
 SITE_ID = 1
@@ -126,7 +125,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
+        'NAME': 'mydb',
         'USER': 'postgres',
         'PASSWORD': 'root123',
         'HOST': 'localhost',
@@ -171,34 +170,36 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
+# https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-# the first static file
-STATIC_URL = '/static/'
+STATIC_URL = "static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]  # new
+STATIC_ROOT = BASE_DIR / "staticfiles"  # new
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"  # new
 
-#defines the locatuion of sttic files in the local developemt
-STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
-#static root
-STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-#static finders- tells django how to look for static filesd irectory
-STATICFILES_FINDERS = [
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-]
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = 'accounts.CustomUser' # new
+AUTH_USER_MODEL = "accounts.CustomUser"  # new
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+# django-crispy-forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"  # new
+CRISPY_TEMPLATE_PACK = "bootstrap5"  # new
 
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
-
-ACCOUNT_USERNAME_REQUIRED = False # new
-ACCOUNT_AUTHENTICATION_METHOD = 'email' # new
-ACCOUNT_EMAIL_REQUIRED = True # new
-ACCOUNT_UNIQUE_EMAIL = True # new
-
-DEFAULT_FROM_EMAIL = 'admin@djangobookstore.com'
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# django-allauth config
+LOGIN_REDIRECT_URL = "home"
+ACCOUNT_LOGOUT_REDIRECT = "home"  # new
+SITE_ID = 1
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # new
+ACCOUNT_SESSION_REMEMBER = True  # new
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False  # new
+ACCOUNT_USERNAME_REQUIRED = False  # new
+ACCOUNT_AUTHENTICATION_METHOD = "email"  # new
+ACCOUNT_EMAIL_REQUIRED = True  # new
+ACCOUNT_UNIQUE_EMAIL = True  # new
