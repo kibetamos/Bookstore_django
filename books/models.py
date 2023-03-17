@@ -20,7 +20,8 @@ class Book(models.Model):
   def get_absolute_url(self):
     return reverse('book_detail', args=[str(self.id)])
             
-            
+#             The book field is the one-to-many foreign key
+# that links Book to Review
             
 class Review(models.Model):
   book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reviews',)
