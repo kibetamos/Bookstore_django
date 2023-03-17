@@ -8,7 +8,7 @@ class Book(models.Model):
   title = models.CharField(max_length=200)
   author = models.CharField(max_length=200)
   price = models.DecimalField(max_digits=6, decimal_places=2)
-  
+  cover = models.ImageField(upload_to='covers/', blank=True)
   
   def __str__ (self):
     
@@ -18,7 +18,7 @@ class Book(models.Model):
             # Django shell.
             
   def get_absolute_url(self):
-    return reverse('book_detail', args=[str(self.id)])
+    return reverse('book_detail', kwargs={'pk': str(self.pk)})
             
 #             The book field is the one-to-many foreign key
 # that links Book to Review
