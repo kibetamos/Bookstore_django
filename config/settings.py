@@ -174,14 +174,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = BASE_DIR / "staticfiles"  # new
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
+STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles')) # new
+STATICFILES_FINDERS = [ # new
+"django.contrib.staticfiles.finders.FileSystemFinder",
+"django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"  # new
 
-MEDIA_URL = '/media/' # new
-
-MEDIA_ROOT = str(BASE_DIR.joinpath('media')) # new
+MEDIA_URL = "/media/"  # new
+MEDIA_ROOT = BASE_DIR / "media"  # new
 
 
 # Default primary key field type
@@ -194,6 +199,7 @@ AUTH_USER_MODEL = "accounts.CustomUser"  # new
 # django-crispy-forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"  # new
 CRISPY_TEMPLATE_PACK = "bootstrap5"  # new
+
 
 # django-allauth config
 LOGIN_REDIRECT_URL = "home"
